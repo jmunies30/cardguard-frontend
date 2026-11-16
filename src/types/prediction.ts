@@ -17,6 +17,8 @@ export type TransactionRecord = {
   predictionLabel: string;
   isFraud: boolean;
   probability: number | null;
+  threshold: number | null;
+  modelName: string | null;
   createdAt: string;
 };
 

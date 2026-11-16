@@ -1,6 +1,6 @@
 import { AlertTriangle, ShieldAlert, ShieldCheck, Sparkles } from 'lucide-react';
+import { ScoreGauge } from '@/components/analysis/ScoreGauge';
 import type { AnalysisOutcome, AnalysisStatus } from '@/hooks/useTransactionAnalysis';
-import { formatProbability } from '@/utils/format';
 
 type PredictionPanelProps = {
   status: AnalysisStatus;
@@ -85,22 +85,11 @@ export function PredictionPanel({ status, outcome, errorMessage }: PredictionPan
           </div>
         </dl>
 
-        <div className="space-y-3 rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-400">Fraud probability</span>
-            <span className="font-semibold text-white">{formatProbability(prediction.fraudProbability)}</span>
-          </div>
-          <div className="h-2 overflow-hidden rounded-full bg-slate-800">
-            <div
-              className={`h-full rounded-full transition-all duration-700 ease-out ${isFraud ? 'bg-rose-500' : 'bg-emerald-500'}`}
-              style={{ width: `${prediction.fraudProbability * 100}%` }}
-            />
-          </div>
-          <div className="flex items-center justify-between text-xs text-slate-500">
-            <span>Decision threshold</span>
-            <span>{formatProbability(prediction.threshold)}</span>
-          </div>
-        </div>
+        <ScoreGauge
+          probability={prediction.fraudProbability}
+          threshold={prediction.threshold}
+          isFraud={isFraud}
+        />
 
         {saveError && (
           <p className="flex items-start gap-2 text-sm text-amber-300">

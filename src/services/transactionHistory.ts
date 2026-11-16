@@ -3,7 +3,8 @@ import type { NewTransactionRecord, TransactionRecord } from '@/types/prediction
 
 const TABLE_NAME = 'fraud_predictions';
 const HISTORY_LIMIT = 50;
-const SELECT_COLUMNS = 'id, transaction_reference, features, prediction_label, is_fraud, probability, created_at';
+const SELECT_COLUMNS =
+  'id, transaction_reference, features, prediction_label, is_fraud, probability, threshold, model_name, created_at';
 
 type FraudPredictionRow = {
   id: string;
@@ -12,6 +13,8 @@ type FraudPredictionRow = {
   prediction_label: string;
   is_fraud: boolean;
   probability: number | null;
+  threshold: number | null;
+  model_name: string | null;
   created_at: string;
 };
 
@@ -23,6 +26,8 @@ function toTransactionRecord(row: FraudPredictionRow): TransactionRecord {
     predictionLabel: row.prediction_label,
     isFraud: row.is_fraud,
     probability: row.probability,
+    threshold: row.threshold,
+    modelName: row.model_name,
     createdAt: row.created_at,
   };
 }
@@ -49,6 +54,8 @@ export async function saveTransactionRecord(record: NewTransactionRecord): Promi
       prediction_label: record.predictionLabel,
       is_fraud: record.isFraud,
       probability: record.probability,
+      threshold: record.threshold,
+      model_name: record.modelName,
     })
     .select(SELECT_COLUMNS)
     .maybeSingle();

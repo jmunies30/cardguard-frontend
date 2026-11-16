@@ -63,6 +63,8 @@ export function useTransactionAnalysis({ onRecordSaved }: UseTransactionAnalysis
           predictionLabel: prediction.decision,
           isFraud: prediction.isFraud,
           probability: prediction.fraudProbability,
+          threshold: prediction.threshold,
+          modelName: prediction.modelName,
         });
         onRecordSaved(savedRecord);
       } catch (saveFailure) {

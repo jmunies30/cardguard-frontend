@@ -2,6 +2,7 @@ import { Activity, ArrowDownUp, BrainCircuit } from 'lucide-react';
 import { TransactionForm } from '@/components/analysis/TransactionForm';
 import { PredictionPanel } from '@/components/analysis/PredictionPanel';
 import { MethodologySection } from '@/components/methodology/MethodologySection';
+import { AnalysisOverview } from '@/components/history/AnalysisOverview';
 import { TransactionHistory } from '@/components/history/TransactionHistory';
 import { Card } from '@/components/ui/Card';
 import { useTransactionAnalysis } from '@/hooks/useTransactionAnalysis';
@@ -61,6 +62,16 @@ export function Dashboard() {
           />
         </Card>
       </div>
+
+      {historyStatus === 'ready' && records.length > 0 && (
+        <Card>
+          <div className="mb-6 space-y-1">
+            <h2 className="text-xl font-semibold text-white">Analysis overview</h2>
+            <p className="text-sm text-slate-400">Summary of your saved predictions from the model.</p>
+          </div>
+          <AnalysisOverview records={records} />
+        </Card>
+      )}
 
       <Card>
         <div className="mb-6 space-y-1">
